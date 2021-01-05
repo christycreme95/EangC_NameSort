@@ -3,7 +3,7 @@ let names = [];
 let randomArr = [];
 let NFO = JSON.parse(localStorage.getItem("List"));
 let displayName = document.getElementById("displayName");
-let second=false;
+let second = false;
 let newName = document.getElementById("newName");
 let outputList = document.getElementById("outputList");
 let listGroup = document.getElementById("listGroup");
@@ -13,37 +13,40 @@ let result1 = [];
 let result;
 
 let submitName = document.getElementById("submitName").addEventListener('click', function () {
-    if ((/^[a-zA-Z ]+$/).test(newName.value)){
+    if ((/^[a-zA-Z ]+$/).test(newName.value)) {
         second = false;
         double();
         if (second == false) {
             create(newName.value);
             newName.value = "";
         }
-    }else{
+    } else {
         alert("enter letters dude.")
     }
 })
 let PerGroupBtn = document.getElementById("PerGroupBtn").addEventListener('click', function () {
-    if (numPerG.value == null || numPerG == "") {
-        alert("Enter A Number Plz");
-    } else {
+    if (numPerG.value == null || numPerG.value == "" || numPerG.value <= 0) {
+        alert("Enter NUMBERS dude!");
+    }else if(names.length==0){
+        alert("Enter NAMES to the list dude!");
+    }else {
         numOfPeeps();
+        numPerG.value='';
     }
 })
 let OfGroupBtn = document.getElementById("OfGroupBtn").addEventListener('click', function () {
-    if (numOfG.value != null || numOfG != "") {
-        numberOfGroups();
+    if (numOfG.value == null || numOfG.value == "" || numOfG.value <= 0) {
+        alert("Enter NUMBERS dude!")
+    }else if(names.length==0){
+        alert("Enter NAMES to the list dude!");
+        numOfG.value='';
     } else {
-        alert("Enter A Number Plz")
+        numberOfGroups();
+        numOfG.value='';
     }
 })
 let randomBtn = document.getElementById("randomBtn").addEventListener('click', function () {
-    if (NFO != null || NFO != "") {
         randomizer();
-    } else {
-        alert("Please Enter Names!")
-    }
 })
 function create(list) {
     let liElement = document.createElement("li");
@@ -68,15 +71,21 @@ if (NFO != "" || NFO != null) {
     }
 }
 function randomizer() {
-    displayName.innerText = names[Math.floor(Math.random() * names.length)]
+    if(names.length > 0){
+        displayName.innerText = names[Math.floor(Math.random() * names.length)]
+    }else{
+        alert("Enter NAMES to the list dude!")
+    }
 }
 function shuffle() {
-    randomArr = Array.from(names)
+    names = Array.from(names)
         .map((a) => ({ sort: Math.random(), value: a }))
         .sort((a, b) => a.sort - b.sort)
         .map((a) => a.value)
+    console.log(names)
 }
 function numberOfGroups() {
+    shuffle();
     let wordsPerLine = 0;
     result1 = [];
     let groupNum = Array.from(names);
@@ -89,13 +98,10 @@ function numberOfGroups() {
             result1[L].push(value);
         }
     }
-    console.log(result1);
     createResults(result1);
 }
 function numOfPeeps() {
-
-    console.log(numPerG.value)
-    console.log(names);
+    shuffle();
     let peepsArr = Array.from(names);
     result = new Array(Math.ceil(peepsArr.length / numPerG.value))
         .fill()
@@ -112,19 +118,17 @@ function double() {
         }
     }
 }
-function createResults(Array){
-    listGroup.innerHTML ="";
-    for(let i=0; i<Array.length;i++){
+function createResults(Array) {
+    listGroup.innerHTML = "";
+    for (let i = 0; i < Array.length; i++) {
         let olElement = document.createElement("div");
-        let createh4 = document.createElement("h4");
-        let olLi = document.createElement("h5");
+        let createh5 = document.createElement("h5");
+        let olLi = document.createElement("h6");
         olElement.classList = "box my-1 text-center";
-        createh4.innerText = `Group ${i+1}`;
-        olLi.innerText = Array[i];
-
-        olElement.appendChild(createh4);
+        createh5.innerText = `Group ${i + 1}`;
+        olLi.innerText = Array[i].join(", ");
+        olElement.appendChild(createh5);
         olElement.appendChild(olLi);
         listGroup.appendChild(olElement)
     }
-
 }
