@@ -11,7 +11,6 @@ let numPerG = document.getElementById("numPerG");
 let numOfG = document.getElementById("numOfG");
 let result1 = [];
 let result;
-
 let submitName = document.getElementById("submitName").addEventListener('click', function () {
     if ((/^[a-zA-Z ]+$/).test(newName.value)) {
         second = false;
