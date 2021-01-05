@@ -22,8 +22,11 @@
        </div>
 
        <div class="col-12 center">
-        <h2>Add Names!</h2>
+        <h2 id="displayName">Add Names!</h2>
        </div>
+       <div class="col-12 center mb-2">
+        <button type="button" id="randomBtn" class="btn btn-outline-primary">Press For Name!</button>
+      </div>
        <div class="col-sm-12 center">
         <div class="input-group">
           <input id="newName" type="text" class="form-control" placeholder="Enter New Name Here" aria-label="New name"
@@ -34,13 +37,34 @@
         </div>
        </div>
 
-       <div class="col-12 center">
-        <input type="number" id="numberPerGroup" name="numPerG" min="1" max="100">
-        <input id="PerGroupBtn" type="submit">
-        <input type="number" id="NumberOfGroups" name="numOfG" min="1" max="100">
-        <input id="OfGroupBtn" type="Submit">
+       <div class="col-sm-12 col-md-6 center">
+        <div class="input-group">
+          <input id="numPerG" type="number" class="form-control" placeholder="People Per Group" aria-label="Number Of People"
+            aria-describedby="PerGroupBtn">
+          <div class="input-group-append">
+            <button id="PerGroupBtn" class="btn btn-outline-primary" type="button">Go</button>
+          </div>
+        </div>
        </div>
 
+       <div class="col-sm-12 col-md-6 center">
+        <div class="input-group">
+          <input id="numOfG" type="number" class="form-control" placeholder="Amount Of Groups" aria-label="Number Of Groups"
+            aria-describedby="OfGroupBtn">
+          <div class="input-group-append">
+            <button id="OfGroupBtn" class="btn btn-outline-primary" type="button">Go</button>
+          </div>
+        </div>
+       </div>
+     </div>
+     
+     <div class="row">
+       <div class="col-12">
+         <ol id="listGroup"></ol>
+       </div>
+       <div class="col-12">
+         <ul id="outputList" class="list-group"></ul>
+       </div>
      </div>
    </div>
 
