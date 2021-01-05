@@ -3,21 +3,25 @@ let names = [];
 let randomArr = [];
 let NFO = JSON.parse(localStorage.getItem("List"));
 let displayName = document.getElementById("displayName");
-let second = false;
+let second=false;
 let newName = document.getElementById("newName");
 let outputList = document.getElementById("outputList");
 let listGroup = document.getElementById("listGroup");
 let numPerG = document.getElementById("numPerG");
 let numOfG = document.getElementById("numOfG");
+let result1 = [];
+let result;
 
 let submitName = document.getElementById("submitName").addEventListener('click', function () {
-    console.log(second);
-    second = false;
-    double();
-    if (second == false) {
-            // [] is the range and it test the input
+    if ((/^[a-zA-Z ]+$/).test(newName.value)){
+        second = false;
+        double();
+        if (second == false) {
             create(newName.value);
             newName.value = "";
+        }
+    }else{
+        alert("enter letters dude.")
     }
 })
 let PerGroupBtn = document.getElementById("PerGroupBtn").addEventListener('click', function () {
@@ -40,10 +44,8 @@ let randomBtn = document.getElementById("randomBtn").addEventListener('click', f
     } else {
         alert("Please Enter Names!")
     }
-
 })
 function create(list) {
-    // console.log(list)
     let liElement = document.createElement("li");
     liElement.innerText = list;
     liElement.classList.add("list-group-item");
@@ -69,38 +71,37 @@ function randomizer() {
     displayName.innerText = names[Math.floor(Math.random() * names.length)]
 }
 function shuffle() {
-    randomArr = names
+    randomArr = Array.from(names)
         .map((a) => ({ sort: Math.random(), value: a }))
         .sort((a, b) => a.sort - b.sort)
         .map((a) => a.value)
 }
 function numberOfGroups() {
-    // console.log(names);
-    let result1 = [];
-    // push an empty array in your for loop
-    for (let i = 0; i < numOfG.value; i++) {
-        result1[i] = [];
-    }
-    let wordsPerLine = Math.ceil(names.length / numOfG.value)
+    let wordsPerLine = 0;
+    result1 = [];
+    let groupNum = Array.from(names);
+    wordsPerLine = Math.ceil(groupNum.length / numOfG.value)
     for (let L = 0; L < numOfG.value; L++) {
+        result1[L] = [];
         for (let i = 0; i < wordsPerLine; i++) {
-            let value = names[i + L * wordsPerLine]
+            let value = groupNum[i + L * wordsPerLine]
             if (!value) continue
             result1[L].push(value);
         }
     }
     console.log(result1);
-
+    createResults(result1);
 }
 function numOfPeeps() {
+
     console.log(numPerG.value)
     console.log(names);
-
-    let result = new Array(Math.ceil(names.length / numPerG.value))
+    let peepsArr = Array.from(names);
+    result = new Array(Math.ceil(peepsArr.length / numPerG.value))
         .fill()
-        .map(_ => names.splice(0, numPerG.value));
+        .map(_ => Array.from(peepsArr.splice(0, numPerG.value)));
     console.log(result)
-
+    createResults(result);
 }
 function double() {
     for (let i = 0; i < names.length; i++) {
@@ -110,4 +111,20 @@ function double() {
             newName.value = "";
         }
     }
+}
+function createResults(Array){
+    listGroup.innerHTML ="";
+    for(let i=0; i<Array.length;i++){
+        let olElement = document.createElement("div");
+        let createh4 = document.createElement("h4");
+        let olLi = document.createElement("h5");
+        olElement.classList = "box my-1 text-center";
+        createh4.innerText = `Group ${i+1}`;
+        olLi.innerText = Array[i];
+
+        olElement.appendChild(createh4);
+        olElement.appendChild(olLi);
+        listGroup.appendChild(olElement)
+    }
+
 }
